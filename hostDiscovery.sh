@@ -37,7 +37,7 @@ function hostDiscovery(){
   echo -e "\n${yellowColour}[ + ]${endColour}${grayColour} Red a escanear: ${endColour}${purpleColour}$network${endColour}" 
   echo -e "\n${yellowColour}[*]${endColour}${grayColour} Escaneando red: ${endColour}${purpleColour}$network${endColour}${grayColour} ...${endColour}"
 
-  # 1) Descubre hosts vivos y cárgalos en un array
+# 1) Descubre hosts vivos y cárgalos en un array
   mapfile -t ips < <(nmap -sn -n "$network" -oG - | awk '/Up$/{print $2}') 
 
   echo -e "\n${yellowColour}[i]${endColour}${grayColour} Hosts vivos encontrados: ${endColour}${blueColour}${#ips[@]}${endColour}"
@@ -47,8 +47,7 @@ function hostDiscovery(){
     tput cnorm
     return 0
   fi
-
-  # 2) Escanear puertos en cada IP (limitando concurrencia)
+# 2) Escanear puertos en cada IP (limitando concurrencia)
   
   local max_jobs=64
   local running=0
@@ -85,13 +84,11 @@ function hostDiscovery(){
   tput cnorm
 }
 
-
-#Creamos parametros m y t, usamos variable arg, case abir caso, esac cerrar, if->fi
 network=""
 
-while getopts ":n:h" arg; do #GETOPTS que nos permita alternar entre una serie de funciones existentes
+while getopts ":n:h" arg; do 
 	case $arg in
-	  n) network="$OPTARG";; #$OPTARG -> recibir parametro que estamos especificando
+	  n) network="$OPTARG";; 
 	  h) helpPanel;;
     :)  # opción con argumento faltante, p.ej. -m sin valor
         echo -e "\n${redColour}[ ! ] La opción ${turquoiseColour}-$OPTARG${endColour} requiere un valor.${endColour}" 
