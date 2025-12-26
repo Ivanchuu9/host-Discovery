@@ -14,6 +14,24 @@ grayColour="\e[0;37m\033[1m"
 
 set -euo pipefail
 
+function banner(){
+    
+    echo -e "${turquoiseColour}"
+    cat << "EOF"
+
+  ___ ___                 __ ________  .__                                      .__                
+ ╱   │   ╲  ____  _______╱  │╲______ ╲ │__│ ______ ____  _______  __ ___________│__│ ____    ____  
+╱    ~    ╲╱  _ ╲╱  ___╱╲   __╲    │  ╲│  │╱  ___╱╱ ___╲╱  _ ╲  ╲╱ ╱╱ __ ╲_  __ ╲  │╱    ╲  ╱ ___╲ 
+╲    Y    (  <_> )___ ╲  │  │ │    `   ╲  │╲___ ╲╲  ╲__(  <_> )   ╱╲  ___╱│  │ ╲╱  │   │  ╲╱ ╱_╱  >
+ ╲___│_  ╱ ╲____╱____  > │__│╱_______  ╱__╱____  >╲___  >____╱ ╲_╱  ╲___  >__│  │__│___│  ╱╲___  ╱ 
+       ╲╱            ╲╱              ╲╱        ╲╱     ╲╱                ╲╱              ╲╱╱_____╱  
+EOF
+    echo -e "${endColour}"
+    echo -e "\t\t${grayColour}⚡ Herramienta de Escaneo Rápido de Red${endColour}"
+    echo -e "\t\t${yellowColour}Autor:${endColour} ${purpleColour}ivanchuu9${endColour} | ${yellowColour}Versión:${endColour} ${blueColour}1.0${endColour}"
+    echo -e "\t\t${grayColour}Github:${endColour} ${blueColour}https://github.com/ivanchuu9${endColour}\n"
+}
+
 function ctrl_c( ){
  	echo -e "\n\n${redColour} [ ! ] Saliendo...${endColour}\n"
 	tput cnorm && exit 1
@@ -63,9 +81,9 @@ function hostDiscovery(){
         fi
       ) &
 
-      ((running++))
+      ((running+=1))
       if (( running >= max_jobs )); then
-        wait -n  # espera a que termine uno
+        wait -n || true  # espera a que termine uno
         ((running--))
       fi
     done
@@ -78,8 +96,8 @@ function hostDiscovery(){
   tput cnorm
 }
 
+banner
 
-#Creamos parametros m y t, usamos variable arg, case abir caso, esac cerrar, if->fi
 network=""
 
 while getopts ":n:h" arg; do #GETOPTS que nos permita alternar entre una serie de funciones existentes
@@ -87,7 +105,7 @@ while getopts ":n:h" arg; do #GETOPTS que nos permita alternar entre una serie d
 	  n) network="$OPTARG";; #$OPTARG -> recibir parametro que estamos especificando
 	  h) helpPanel;;
     :)  # opción con argumento faltante, p.ej. -m sin valor
-        echo -e "\n${redColour}[ ! ] La opción ${turquoiseColour}-$OPTARG${endColour} requiere un valor.${endColour}" 
+        echo -e "\n${redColour}[ ! ] La opción ${turquoiseColour}-$OPTARG${endColour}${redColour} requiere un valor.${endColour}" 
         helpPanel; exit 1 ;;
     \?) # opción desconocida
        echo -e "\n${redColour}[ ! ] Opción no válida: ${turquoiseColour}-$OPTARG${endColour}${endColour}" 
