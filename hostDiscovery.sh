@@ -50,7 +50,7 @@ function helpPanel(){
 
 function hostDiscovery(){
   local network=$network
-  local ports=(21 22 23 25 80 139 443 445 8080)
+  local ports=(21 22 23 25 53 80 111 139 389 443 445 1433 3306 3389 5432 5900 5985 6379 8000 8080 8443 9000)
   
   echo -e "\n${yellowColour}[ + ]${endColour}${grayColour} Red a escanear: ${endColour}${purpleColour}$network${endColour}" 
   echo -e "\n${yellowColour}[*]${endColour}${grayColour} Escaneando red: ${endColour}${purpleColour}$network${endColour}${grayColour} ...${endColour}"
@@ -72,7 +72,6 @@ function hostDiscovery(){
   local running=0
   
   for ip in "${ips[@]}"; do
-    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Escaneando host: ${endColour}${purpleColour}$ip${endColour}" 
     for port in "${ports[@]}"; do
       (
         set +e
@@ -89,8 +88,10 @@ function hostDiscovery(){
     done
   done
 
-  echo -e "\n${yellowColour}[i]${endColour}${grayColour} Escaneo completado.${endColour}"
   wait
+  sleep 0.25
+  echo -e "\n${yellowColour}[i]${endColour}${grayColour} Escaneo completado.${endColour}"
+
 
 
   tput cnorm
