@@ -3,6 +3,8 @@
 **hostDiscovery.sh** es un script en **Bash** que permite descubrir hosts activos en una red local y escanear sus puertos abiertos de forma rápida, sencilla y concurrente.  
 Ideal para tareas de auditoría, pruebas de red o aprendizaje sobre escaneo TCP básico en Bash.
 
+<img width="800" height="440" alt="image" src="https://github.com/user-attachments/assets/a17f9765-9256-42de-9254-03d999d2c96e" />
+
 ---
 
 ## 🚀 Características
